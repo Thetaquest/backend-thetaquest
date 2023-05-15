@@ -10,12 +10,10 @@ const quizSchema = new mongoose.Schema({
         required: true
     },
     quizTime:{
-        type:Number,
-        required:true
+        type:Number
     },
     entrancePriceTfuel:{
-        type: Number,
-        required: true
+        type: Number
     },
     participantsAmount: {
         type: Number,
@@ -53,6 +51,10 @@ const quizSchema = new mongoose.Schema({
     randomOptionOrder:{
         type: Boolean,
         default: false
+    },
+    category:{
+        type:String,
+        default:""
     },
     winners:[{
         winner:{
