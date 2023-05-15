@@ -10,13 +10,21 @@ const quizParticipationSchema = new mongoose.Schema({
         default:0
     },
     quizSmartContractAddress:{
-        type: String,//adress of wallet owner
+        type: String,
         required: true
     },
     quizId:{
         type: mongoose.ObjectId,
         required: true,
         ref:'quiz'
+    },
+    correctanswers:{
+        type:Number,
+        default:0
+    },
+    incorrectAnswers:{
+        type:Number,
+        default:0
     }
 })
 
