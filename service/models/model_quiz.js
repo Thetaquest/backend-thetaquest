@@ -9,6 +9,10 @@ const quizSchema = new mongoose.Schema({
         type: String,//adress of wallet owner
         required: true
     },
+    quizTime:{
+        type:Number,
+        required:true
+    },
     entrancePriceTfuel:{
         type: Number,
         required: true
@@ -71,4 +75,4 @@ const quizSchema = new mongoose.Schema({
 // })
 
 const Quiz = mongoose.model('quiz',quizSchema);
-export default Quiz;
+module.exports =  Quiz;

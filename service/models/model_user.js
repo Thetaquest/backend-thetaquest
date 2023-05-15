@@ -8,8 +8,14 @@ const userSchema = new mongoose.Schema({
     wonQuiz:{
         type: [mongoose.ObjectId],
         ref:'quiz'
+    },
+    name:{
+        type: String,
+    },
+    email:{
+        type: String,
     }
 })
 
 const User = mongoose.model('user',userSchema);
-export default User;
+module.exports = User;

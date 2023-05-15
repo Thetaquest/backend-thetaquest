@@ -21,4 +21,4 @@ const quizSectionsSchema = new mongoose.Schema({
 })
 
 const QuizSections = mongoose.model('quizSections',quizSectionsSchema);
-export default QuizSections;
+module.exports =  QuizSections;
