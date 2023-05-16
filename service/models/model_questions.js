@@ -22,7 +22,7 @@ const questionsSchema = new mongoose.Schema({
         required: true
     },
     answers:{
-        type:[Number],
+        type:[String],
         required: true
     }
 })
