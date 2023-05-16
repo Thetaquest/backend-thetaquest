@@ -2,6 +2,7 @@ const express = require('express')
 const router_quiz = express.Router();
 const service_quiz = require('../service/services/service_quiz');
 const service_user = require('../service/services/service_user');
+const service_participation = require('../service/services/service_participation')
 
 router_quiz.get('/quizdata/address/:address',async (req,res)=>{
     const quiz = await service_quiz.getQuizDataAddress(req.params.address)
@@ -102,15 +103,16 @@ router_quiz.post('/hostQuiz', async (req, res) => {
     }
 
 })
-
-router_quiz.post('/studentjoinQuiz', (req, res) => {
-
+router_quiz.post('/setwinners',async (req,res)=>{
+    const {quizAddress,quizTeacherAddr} = req.body;
+    const winners = await service_quiz.quizChooseWinners(quizAddress,quizTeacherAddr);
     res.status(200).json({
         message: "",
-        data: user,
+        data: winners,
         error: false
     })
 })
+
 
 
 module.exports = router_quiz;
