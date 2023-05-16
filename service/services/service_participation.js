@@ -2,7 +2,7 @@ const QuizParticipation = require('../models/model_participation');
 
 exports.participate = async (participantAddress,quizSmartContractAddress,quizId) => {
     const participation = await QuizParticipation.create({
-        participantAddress,
+        participant:participantAddress,
         quizSmartContractAddress,
         quizId
     })
@@ -21,7 +21,7 @@ exports.userParticipations = async (participantAddress) => {
 exports.userQuizParticipation = async (quizId,participantAddress) => {
     const participation = await QuizParticipation.findOne({
         quizId,
-        participantAddress
+        participant:participantAddress
     })
 
 
@@ -55,4 +55,12 @@ exports.addIncorrect = async (quizId,participantAddress)=>{
     },{
         incorrectAnswers:participation.incorrectAnswers
     });
+}
+
+exports.getBestParticipations = async (quizId,limitnumber) => {
+    console.log(quizId,limitnumber)
+    const participations = await QuizParticipation.find({
+        quizId
+    }).limit(limitnumber).sort([['score','desc']]);
+    return participations
 }
