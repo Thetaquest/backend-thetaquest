@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const routerquiz = require('./routers/router_quiz');
 const routeruser = require('./routers/router_user');
+const routerquestions = require('./routers/router_questions');
+const routerparticipations = require('./routers/router_participation');
 const dotenv = require('dotenv').config()
 const http = require("http");
 
@@ -18,6 +20,8 @@ app.use(express.json());
 
 app.use('/api/quiz',routerquiz);
 app.use('/api/user',routeruser);
+app.use('/api/questions',routerquestions);
+app.use('/api/participations',routerparticipations)
 
 app.all("*",(req,res,next)=>{
     return res.status(200).json({
