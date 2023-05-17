@@ -61,7 +61,7 @@ router_quiz.post('/createQuiz', async (req, res) => {
 
 router_quiz.post('/hostQuiz', async (req, res) => {
     const { quizId,
-        quizContractAddress,
+        quizContractAdress,
         quizTime,
         entrancePriceTfuel,
         startDate,
@@ -70,7 +70,8 @@ router_quiz.post('/hostQuiz', async (req, res) => {
         randomQuestionOrder,
         randomOptionOrder,
         name,
-        description
+        description,
+        prizes
     } = req.body;
 
     //check quiz not hosted already
@@ -82,9 +83,16 @@ router_quiz.post('/hostQuiz', async (req, res) => {
             error: true
         })
     } else {
+        if(prizes.length<3){
+            res.status(200).json({
+                message: "not enough prizes, minium 3",
+                data: null,
+                error: true
+            })
+        }
         //host quiz
         const newquiz = await service_quiz.hostQuiz(quizId,
-            quizContractAddress,
+            quizContractAdress,
             quizTime,
             entrancePriceTfuel,
             startDate,
@@ -93,7 +101,8 @@ router_quiz.post('/hostQuiz', async (req, res) => {
             randomQuestionOrder,
             randomOptionOrder,
             name,
-            description
+            description,
+            prizes
         )
         res.status(200).json({
             message: "quiz hosted",

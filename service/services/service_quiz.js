@@ -1,6 +1,6 @@
 const Quiz = require("../models/model_quiz");
 const User = require("../models/model_user");
-
+const service_participations = require('../services/service_participation')
 exports.createQuiz = async (teacher,title,description,category) => {
     const quiz = await Quiz.create({
         owner:teacher,
@@ -14,7 +14,7 @@ exports.createQuiz = async (teacher,title,description,category) => {
 
 exports.hostQuiz = async (
     quizId,
-    quizContractAddress,
+    quizContractAdress,
     quizTime,
     entrancePriceTfuel,
     startDate,
@@ -23,13 +23,20 @@ exports.hostQuiz = async (
     randomQuestionOrder,
     randomOptionOrder,
     name,
-    description
+    description,
+    prizes
 ) => {
-    
+    const winners = [];
+    prizes.map(prize=>{
+        winners.push({
+            winner:"tbd",
+            prizeTfuel:prize
+        },)
+    })
     const hosted_quiz = await Quiz.updateOne({
         _id:quizId
     },{
-        quizContractAddress,
+        quizContractAdress:quizContractAdress,
         quizTime,
         entrancePriceTfuel,
         startDate,
@@ -39,7 +46,8 @@ exports.hostQuiz = async (
         randomOptionOrder,
         name,
         description,
-        hosted: true
+        hosted: true,
+        winners
     })
     return hosted_quiz;
 }
@@ -84,6 +92,20 @@ exports.getQuizDataId = async(quizId)=>{
     return quizdata
 }
 
-exports.quizChooseWinners = async(quizAddress)=>{
+exports.quizChooseWinners = async(quizAddress,quizTeacherAddr)=>{
+    //not enough but minium validation
+    const quizData = await Quiz.findOne({
+        quizContractAdress: quizAddress
+    })
+    if(!quizData || quizData.owner!=quizTeacherAddr){
+        return 'error'
+    }
+    
+    //get highed score participations
+    const high_scores = await service_participations.getBestParticipations(quizData._id,quizData.winners.length)
+    console.log(high_scores)
+    //mix high_scores and prizes
+
+    //update winners field on quiz schema
 
 }
