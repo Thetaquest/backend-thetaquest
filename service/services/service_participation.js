@@ -58,7 +58,6 @@ exports.addIncorrect = async (quizId,participantAddress)=>{
 }
 
 exports.getBestParticipations = async (quizId,limitnumber) => {
-    console.log(quizId,limitnumber)
     const participations = await QuizParticipation.find({
         quizId
     }).limit(limitnumber).sort([['score','desc']]);

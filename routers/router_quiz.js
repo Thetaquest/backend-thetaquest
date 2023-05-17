@@ -116,7 +116,7 @@ router_quiz.post('/setwinners',async (req,res)=>{
     const {quizAddress,quizTeacherAddr} = req.body;
     const winners = await service_quiz.quizChooseWinners(quizAddress,quizTeacherAddr);
     res.status(200).json({
-        message: "",
+        message: "winners have been selected",
         data: winners,
         error: false
     })

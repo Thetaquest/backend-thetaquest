@@ -103,9 +103,18 @@ exports.quizChooseWinners = async(quizAddress,quizTeacherAddr)=>{
     
     //get highed score participations
     const high_scores = await service_participations.getBestParticipations(quizData._id,quizData.winners.length)
-    console.log(high_scores)
     //mix high_scores and prizes
-
+    const winners = [];
+    for(let i = 0;i<quizData.winners.length;i++){
+        winners.push({
+            winner:high_scores[i].participant,
+            prizeTfuel:quizData.winners[i].prizeTfuel
+        })
+    }
+    
     //update winners field on quiz schema
+    quizData.winners = winners;
+    await quizData.save();
 
+    return quizData
 }
