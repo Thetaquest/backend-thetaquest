@@ -1,6 +1,7 @@
 const express = require('express')
 const router_questions = express.Router();
 const service_questions = require('../service/services/service_question');
+const QuizAnswers = require('../service/models/models_answers');
 
 router_questions.get('/question/:questionid',async (req,res)=>{
     const question = await service_questions.getQuestion(req.params.questionid);
@@ -42,7 +43,22 @@ router_questions.post('/update',async (req,res)=>{
 
 router_questions.post('/answer',async (req,res)=>{
     const {questionid,answerIndex,studentAddress} = req.body;
+    const answer = await QuizAnswers.find({
+        student:studentAddress,
+        questionId:questionid
+    })
+    if(answer.length>0){
+        return res.status(200).json({
+            message: "question already answered",
+            data: null,
+            error: true
+        })  
+    }
     const data = await service_questions.answerQuestion(questionid,answerIndex,studentAddress);
+    await QuizAnswers.create({
+        student:studentAddress,
+        questionId:questionid
+    })
     if(data===true){
         res.status(200).json({
             message: "answer correct!",
