@@ -31,14 +31,14 @@ exports.userQuizParticipation = async (quizId,participantAddress) => {
 exports.addScore = async (quizId,participantAddress,amount)=>{
     const participation = await QuizParticipation.findOne({
         quizId,
-        participantAddress
+        participant:participantAddress
     })
     
     await QuizParticipation.updateOne({
         participant:participantAddress,
         quizId
     },{
-        correctanswers:participation.correctanswers,
+        correctanswers:participation.correctanswers+1,
         score: participation.score + amount
     });
 }
@@ -46,14 +46,14 @@ exports.addScore = async (quizId,participantAddress,amount)=>{
 exports.addIncorrect = async (quizId,participantAddress)=>{
     const participation = await QuizParticipation.findOne({
         quizId,
-        participantAddress
+        participant:participantAddress
     })
-    
+    console.log(participation)
     await QuizParticipation.updateOne({
         participant:participantAddress,
         quizId
     },{
-        incorrectAnswers:participation.incorrectAnswers
+        incorrectAnswers:participation.incorrectAnswers+1
     });
 }
 

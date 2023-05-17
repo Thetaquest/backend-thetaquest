@@ -42,7 +42,7 @@ router_questions.post('/update',async (req,res)=>{
 
 router_questions.post('/answer',async (req,res)=>{
     const {questionid,answerIndex,studentAddress} = req.body;
-    const data = service_questions.answerQuestion(questionid,answerIndex,studentAddress);
+    const data = await service_questions.answerQuestion(questionid,answerIndex,studentAddress);
     if(data===true){
         res.status(200).json({
             message: "answer correct!",
